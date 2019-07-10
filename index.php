@@ -5,68 +5,115 @@ require 'functions/file.php';
 require 'functions/html/builder.php';
 require 'functions/form/core.php';
 
+$nav = [
+    [
+        'url' => '/',
+        'title' => 'Home'
+    ]
+];
+
 $form = [
     'attr' => [
         //'action' => '', Neb8tina, jeigu action yra ''
         'method' => 'POST',
     ],
     'fields' => [
-        'team_name' => [
-            'label' => 'New Team Name:',
+        'test_input' => [
+            'label' => 'Test Field',
             'type' => 'text',
             'extra' => [
                 'attr' => [
-                    'class' => 'team-name',
-                    'placeholder' => 'Team name'
+                    'class' => 'my-test-field',
+                    'placeholder' => 'This is a Test Field'
                 ],
-                'validators' => []
+                'validators' => [
+                    'validate_not_empty'
+                ]
             ],
         ],
-        'team_select' => [
+        'test_select' => [
             'type' => 'select',
-            'value' => 0,
+            'label' => 'It`s Time To Choose',
+            'value' => 1, // Koreliuoja su options pasirinkimo indeksu
             'options' => [
-                'Komanda 1',
-                'Komanda 2',
-                'Komanda 3'
+                'Inferno',
+                'De-Dust 2',
+                'Militia'
             ],
             'extra' => [
                 'attr' => [
-                    'class' => 'team-name',
+                    'class' => 'my-select-field',
                 ],
-                'validators' => []
+                'validators' => [
+                    'validate_not_empty'
+                ]
             ]
         ]
     ],
     'buttons' => [
         'create' => [
-            'title' => 'Create',
+            'title' => 'OK',
             'extra' => [
                 'attr' => [
-                    'class' => 'create-btn'
+                    'class' => 'blue-btn'
                 ]
             ]
         ],
         'delete' => [
-            'title' => 'Delete',
+            'title' => 'NO',
             'extra' => [
                 'attr' => [
-                    'class' => 'delete-btn'
+                    'class' => 'red-btn'
                 ]
             ]
         ]
+    ],
+    'callbacks' => [
+        'success' => 'form_success',
+        'fail' => 'form_fail'
     ]
 ];
+
+function form_fail($filtered_input, &$form) {
+    var_dump('Form failed!');
+}
+
+function form_success($filtered_input, &$form) {
+    var_dump('Form succeeded!');
+}
+
+// Get all data from $_POST
+$input = get_form_input($form);
+
+// If any data was entered, validate the input
+if (!empty($input)) {
+    $success = validate_form($input, $form);
+    $message = $success ? 'Cool!' : 'Not Cool!';
+}
 ?>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Create Team</title>
+        <title>Welcome To PHP FightClub!</title>
         <link rel="stylesheet" href="media/css/normalize.css">
         <link rel="stylesheet" href="media/css/style.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+        <script src="media/js/app.js"></script>    
     </head>
     <body>
+        <!-- $nav Navigation generator -->
+        <?php require 'templates/navigation.tpl.php'; ?>        
+
+        <?php if (isset($message)): ?>
+            <div class="message">
+                <span class="text"><?php print $message; ?></span>
+                <span class="close">X</span>
+            </div>
+        <?php endif; ?>
+
         <!-- $form HTML generator -->
         <?php require 'templates/form.tpl.php'; ?>
     </body>

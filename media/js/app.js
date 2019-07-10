@@ -4,4 +4,8 @@
  * and open the template in the editor.
  */
 
-
+$('body').ready(function () {
+    $('.message .close').on('click', function () {
+        $(this).parent().fadeOut();
+    });
+});
