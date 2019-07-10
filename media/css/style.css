@@ -1,0 +1,36 @@
+.form-wrapper {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: calc(100vh - 40px);
+	padding: 10px 0;
+}
+
+form {
+	width: 300px;
+	background: rgb(255, 248, 248);
+	padding: 20px;
+}
+
+input,
+button,
+label {
+	display: block;
+	margin: 10px 0;
+}
+
+.answer {
+	border: 1px solid black;
+	width: 300px;
+	padding: 20px;
+}
+
+table,
+table td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+table td {
+	padding: 5px;
+}
