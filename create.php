@@ -20,62 +20,35 @@ $nav = [
     ],
 ];
 
-
 $form = [
     'attr' => [
-        //'action' => '', Neb8tina, jeigu action yra ''
+        //'action' => '', Nebūtina, jeigu action yra ''
         'method' => 'POST',
     ],
     'fields' => [
-        'test_input' => [
-            'label' => 'Test Field',
+        'team_name' => [
+            'label' => 'Choose Team name',
             'type' => 'text',
             'extra' => [
                 'attr' => [
-                    'class' => 'my-test-field',
-                    'placeholder' => 'This is a Test Field'
+                    'placeholder' => 'Type team name here'
                 ],
                 'validators' => [
-                    'validate_not_empty'
+                    'validate_not_empty',
+                    'validate_team_name_exists'
                 ]
             ],
         ],
-        'test_select' => [
-            'type' => 'select',
-            'label' => 'It`s Time To Choose',
-            'value' => 1, // Koreliuoja su options pasirinkimo indeksu
-            'options' => [
-                'Inferno',
-                'De-Dust 2',
-                'Militia'
-            ],
-            'extra' => [
-                'attr' => [
-                    'class' => 'my-select-field',
-                ],
-                'validators' => [
-                    'validate_not_empty'
-                ]
-            ]
-        ]
     ],
     'buttons' => [
         'create' => [
-            'title' => 'OK',
-            'extra' => [
-                'attr' => [
-                    'class' => 'blue-btn'
-                ]
-            ]
-        ],
-        'delete' => [
-            'title' => 'NO',
+            'title' => 'Create team',
             'extra' => [
                 'attr' => [
                     'class' => 'red-btn'
                 ]
             ]
-        ]
+        ],
     ],
     'callbacks' => [
         'success' => 'form_success',
@@ -83,12 +56,39 @@ $form = [
     ]
 ];
 
+function validate_team_name_exists($field_input, &$field) {
+    $file_data = file_to_array(STORAGE_FILE);
+    if ($file_data) {
+        foreach ($file_data as $team_id => $team) {
+            if ($field_input == $team['team_name']) {
+                $field['error'] = 'Tokia komanda jau yra!';
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 function form_fail($filtered_input, &$form) {
-    var_dump('Form failed!');
+//    var_dump('Form failed!');
 }
 
 function form_success($filtered_input, &$form) {
-    var_dump('Form succeeded!');
+    $team = [
+        'team_name' => $filtered_input['team_name'],
+        'players' => [
+        ],
+        'score' => 0
+    ];
+
+    $data = [];
+    $file_data = file_to_array(STORAGE_FILE);
+    if ($file_data) {
+        $data = $file_data;
+    }
+
+    $data[] = $team;
+    array_to_file($data, STORAGE_FILE);
 }
 
 // Get all data from $_POST
@@ -97,7 +97,7 @@ $input = get_form_input($form);
 // If any data was entered, validate the input
 if (!empty($input)) {
     $success = validate_form($input, $form);
-    $message = $success ? 'Cool!' : 'Not Cool!';
+    $message = $success ? 'Nauja komanda sukurta' : 'Klaida!';
 }
 ?>
 <html>

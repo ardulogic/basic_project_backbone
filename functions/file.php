@@ -23,11 +23,14 @@ function array_to_file($filtered_input, $filename) {
  * @return array|boolean
  */
 function file_to_array($filename) {
-    $encoded_string = file_get_contents($filename);
+    if (file_exists($filename)) {
+        $encoded_string = file_get_contents($filename);
 
-    if ($encoded_string !== false) {
-        return json_decode($encoded_string, true);
+        if ($encoded_string !== false) {
+            return json_decode($encoded_string, true);
+        }    
     }
-
+    
     return false;
 }
+
