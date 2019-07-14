@@ -14,7 +14,7 @@
                             </span>
                         <?php endif; ?>
 
-                        <?php if ($field['type'] === 'text'): ?>
+                        <?php if (in_array($field['type'], ['text', 'number', 'email', 'hidden'])): ?>
                             <?php require 'form/input.tpl.php'; ?>
                         <?php elseif ($field['type'] === 'select'): ?>
                             <?php require 'form/select.tpl.php'; ?>
@@ -42,6 +42,12 @@
                     <?php endforeach; ?>
                     <!-- Button Generation End --> 
 
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($form['message'])): ?>
+                <div class="message">
+                    <span><?php print $form['message']; ?></span>
                 </div>
             <?php endif; ?>
         </form>
