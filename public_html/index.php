@@ -49,10 +49,10 @@ var_dump('Drink:', $drink);
         <script defer src="media/js/app.js"></script>
     </head>
     <body>
-        <?php require ROOT . '/templates/navigation.tpl.php'; ?>
+        <?php require ROOT . '/app/templates/navigation.tpl.php'; ?>
         
         <div class="content">
-            
+            <?php require ROOT . '/core/templates/form/form.tpl.php'; ?>
         </div>
     </body>
 </html>

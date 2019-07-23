@@ -16,9 +16,9 @@
 
                         <!--fields to be printed-->
                         <?php if (in_array($field['type'], ['hidden', 'text', 'password', 'email', 'number'])): ?>
-                            <?php require 'form/input.tpl.php'; ?>
+                            <?php require 'elements/input.tpl.php'; ?>
                         <?php elseif ($field['type'] === 'select'): ?>
-                            <?php require 'form/select.tpl.php'; ?>
+                            <?php require 'elements/select.tpl.php'; ?>
                         <?php endif; ?> 
                         
                         <?php if (isset($field['label'])): ?>
@@ -41,7 +41,7 @@
 
                     <!--Generate all the buttons-->
                     <?php foreach ($form['buttons'] as $button_id => $button): ?>
-                        <?php require 'form/button.tpl.php'; ?>
+                        <?php require 'elements/button.tpl.php'; ?>
                     <?php endforeach; ?>
                     <!--Button Generator End-->
                     
