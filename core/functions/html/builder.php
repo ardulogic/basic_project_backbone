@@ -14,6 +14,6 @@ function html_attr($attributes) {
             '@value' => $attribute_value
         ]);
     }
-    
+
     return implode(' ', $html_attr_arr);
 }

@@ -2,11 +2,6 @@
 
 require 'validators.php';
 
-/**
- * Sanitizes submitted form fields
- * @param array $form
- * @return array sanitized (filtered) data
- */
 function get_form_input($form) {
     $filter_parameters = [];
 
@@ -22,7 +17,7 @@ function get_form_input($form) {
 }
 
 /**
- * Sanitizes submitted form action (button) value
+ * Sanitizes submitted button data
  * @return string
  */
 function get_form_action() {
@@ -42,27 +37,26 @@ function validate_form($filtered_input, &$form) {
 
     foreach ($form['fields'] as $field_id => &$field) {
         $field_value = $filtered_input[$field_id];
+        
+        // Set field value from submitted form, so the user
+        // doesnt have to enter it again if form fails
         $field['value'] = $field_value;
 
-        foreach ($field['extra']['validators'] ?? [] as $validator) {
-            $is_valid = $validator($field_value, $field);
+        foreach ($field['extra']['validators'] ?? [] as $validator_id => $validator) {
+            // We can make validator receive params, setting it as an array itself
+            // in that case, validator id becomes its callback function
+            if (is_array($validator)) {
+                $is_valid = $validator_id($field_value, $field, $validator);
+            } else {
+                $is_valid = $validator($field_value, $field);
+            }
+
             if (!$is_valid) {
                 $success = false;
                 break;
             }
         }
     }
-
-    if ($success) {
-        foreach ($form['validators'] ?? [] as $validator) {
-            $is_valid = $validator($filtered_input, $form['fields'], $form);
-            if (!$is_valid) {
-                $success = false;
-                break;
-            }
-        }
-    }
-
 
     if ($success) {
         if (isset($form['callbacks']['success'])) {

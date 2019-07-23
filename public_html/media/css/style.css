@@ -4,6 +4,11 @@
         url('/media/css/fonts/manrope-light.woff') format('woff') /* Pretty Modern Browsers */
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
     font-family: 'manrope';
     color: #333333;
@@ -13,16 +18,15 @@ body {
 
 .form-wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    height: calc(100vh - 40px);
-    padding: 10px 0;
+    height: 500px;
 }
 
 .form-wrapper form {
     width: 300px;
     border: 1px solid #bfbfbf;
-    background: #f5f5f5;
+    background: white;
     padding: 20px;
 }
 .form-wrapper label span {
@@ -46,6 +50,7 @@ body {
     padding: 5px;
     box-sizing: border-box;  
     font-weight: bold;
+	background: white;
     width: 50%;
 }
 
@@ -66,76 +71,111 @@ body {
     padding: 5px;
     margin: 5px;
     min-width: 30%;
-    background: #8a8a8a;
-    box-shadow: 1px 1px 2px 1px #cacaca;
-    color: white;
+    background: white;
+    color: black;
     font-weight: bold;
-    border: 2px solid #6b6b6b;
+    border: 1px solid grey;
     box-sizing: border-box;
     cursor: pointer;
 }
 
 .form-wrapper .button-wrapper button:hover {
-    border: 2px solid white;
+    border: 1px solid white;
+	background: rgb(180, 20, 70);
+	color: white;
 }
 
-.form-wrapper .button-wrapper button.blue-btn:hover {
-    background: #6e94ea;
-}
-
-.form-wrapper .button-wrapper button.red-btn:hover {
-    background: #ff5353;
-}
-
-.form-wrapper .button-wrapper button.green-btn:hover {
-    background: #6dc320;
-}
-
-/* ### Message Box ### */
-
+/* ### Other Styles ### */
 .message {
     position: absolute;
-    top: 5%;
-    left: 5%;
-    padding: 20px;
-    background: #d8d8d8;
-    min-width: 150px;
-    border-radius: 5px;
-    margin: 10px;
+    top: calc(50vh - 150px);
+    left: 10%;
+    padding: 60px;
+	border-radius: 50%;
+    background: rgb(255, 220, 220);
+	width: 100px;
+	height: 100px;
+	text-align: center;
 }
 
 .message span.text {
-    border-radius: 5px;
-    background: white;
+    background: rgb(210, 240, 245);
     font-weight: bold;
-    padding: 5px;
+    padding: 20px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
 }
-
-.message span.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-    background: rgba(255,255,255,0.6);
-    padding: 2px;
-}
-
-.message span.close:hover {
-    font-weight: bold;
-}
-
-/* ### Navigation ### */
 
 .nav-wrapper {
-    background: #616161;
+    background: white;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: flex-start;
+	box-sizing: border-box;
 }
 
 .nav-wrapper a {
     display: block;
     padding: 10px;
-    background: white;
+	text-decoration: none;
+	color: #333;
     text-align: center;
     font-weight: bold;
+}
+
+.table-wrapper {
+	padding: 20px 0;
+}
+
+.table-wrapper table {
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.table-wrapper table tr:hover td {
+	background: rgb(180, 20, 70);
+	color: white;
+}
+
+.table-wrapper table,
+.table-wrapper td,
+.table-wrapper th {
+	box-sizing: border-box;
+	border: 1px solid black;
+	border-collapse: collapse;
+	background: white;
+}
+
+.table-wrapper th {
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.table-wrapper tbody td span:not(:last-child):after {
+	content: ', ';
+}
+
+.nav-wrapper .void {
+	width: 100%;
+	border-bottom: 1px solid #333;
+}
+
+.nav-wrapper .field-wrapper {
+	border-bottom: 1px solid #333;
+	border-right: 1px solid white;
+	border-left: 1px soldi white;
+	min-width: 120px;
+}
+
+.nav-wrapper div.active {
+	border-left: 1px solid #333;
+	border-right: 1px solid #333;
+	border-bottom: 1px solid white;
+}
+
+div.active a {
+	/*color: black;*/
 }
